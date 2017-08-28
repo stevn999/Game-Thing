@@ -17,6 +17,9 @@
   border-radius: 3px;
 
 }
+.btn-danger {
+  background: #ad4542;
+}
 .hideme {
   display: none;
   margin-bottom: 1%;
