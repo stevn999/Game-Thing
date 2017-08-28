@@ -3,6 +3,7 @@ var level = 0;
 var active = true
 var activeE = false
 var lives = 3
+var lastTime = Date.now()
 var contributers = ['Daft Podunk',
                     'Willard',
                     'Hugh Morris',
@@ -92,7 +93,17 @@ var gameClock = setInterval(function () {
  }else {
    $(".hideme").slideDown(200)
  }
-
+ if ((Date.now() - lastTime) > 400) {
+   for (var i = 0; i < ((Date.now() - lastTime)/100); i++) {
+     if (player.health > 0) {
+       player.regen()
+     }
+   }
+   if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
+     enemyDoc.innerHTML = makeHtml(enemy)
+     main.innerHTML = makeHtml(player)
+   }
+ }
 }, 100);
 (function($) {
   $.fn.nodoubletapzoom = function() {
