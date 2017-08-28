@@ -32,6 +32,12 @@
   border: 2px solid black;
   margin-bottom: 0.5%;
 }
+.title {
+  text-align: center;
+  Padding: 0.5% 0;
+  margin-top: 0;
+  margin-bottom: 1px;
+}
 .info .damage.hit {
   background: rgba(255, 42, 0, 0.57);
   border: 1px solid #77285c;
