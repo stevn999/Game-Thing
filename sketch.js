@@ -120,7 +120,7 @@ var gameClock = setInterval(function () {
 //         $(this).trigger('click').trigger('click');
 //       });
 //   };
-})(jQuery);
+//})(jQuery);
 var clock = setInterval(function () {
   if (player.health > 0) {
     player.regen()
