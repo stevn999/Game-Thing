@@ -104,6 +104,7 @@ var gameClock = setInterval(function () {
      main.innerHTML = makeHtml(player)
    }
  }
+ lastTime = Date.now()
 }, 100);
 (function($) {
   $.fn.nodoubletapzoom = function() {
