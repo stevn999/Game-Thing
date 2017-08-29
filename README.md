@@ -1,2 +1,2 @@
 # Game-Thing
-A weird game
+https://stevn999.github.io/Game-Thing/#
