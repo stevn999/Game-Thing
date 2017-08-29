@@ -30,7 +30,7 @@ function human() {
   }
   this.attack = function () {
     var damage = 0
-    if (p5.random(this.weapon.accuracy,100)>50) {
+    if (p5.random(this.weapon.accuracy,100)>30) {
       this.stamina = +(this.stamina-((this.weapon.damage*this.weapon.di)/20)).toFixed(0);
       for (var i = 0; i < this.weapon.di; i++) {
         damage += Math.round(p5.random(1,this.weapon.damage))
@@ -92,6 +92,7 @@ function Enemy() {
     this.name = "The Legendary " + this.name
     this.weapon.damage += Math.round(p5.random(1,7+(level/2)))
     this.weapon.di += Math.round(p5.random(0,1+(level/20)))
+    this.weapon.accuracy += Math.round(p5.random(0,1+(level/20)))
     this.weapon.speed -= 300
     this.weapon.speed = +(this.weapon.speed).toFixed(2)
     if (this.weapon.speed <=0) {
@@ -117,6 +118,7 @@ function Weapon() {
     this.type = this.type.slice(3)
     this.damage += Math.round(p5.random(1,7+(level/2)))
     this.di += Math.round(p5.random(1,1+(level/40)))
+    this.accuracy += Math.round(p5.random(1,1+(level/10)))
     this.speed += p5.random(10,400)
     if (this.speed >= 1000) {
       this.speed = p5.random(800,999)

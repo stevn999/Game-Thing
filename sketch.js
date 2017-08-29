@@ -22,7 +22,8 @@ var contributers = ['Daft Podunk',
                     'Dezzy',
                     'Mitch',
                     'E Van',
-                    'The Dabsmith'
+                    'The Dabsmith',
+                    'Ninnyz'
                 ]
 var ling = [
   'al','ey','e','ie','t','ev','ou','ic','oc','so'
@@ -40,6 +41,16 @@ setTimeout(function () {
   activeE=true
 }, 4000);
 
+function save() {
+  var sav1 = JSON.stringify(player.weapon)
+  sav1 = btoa(sav1)
+  saveDoc.value = sav1
+}
+function load() {
+  var sav = saveDoc.value
+  sav = atob(sav)
+  player.weapon = JSON.parse(sav)
+}
 
 var weapons = []
 
@@ -47,6 +58,9 @@ for (var i = 0; i < 20; i++) {
   weapons.push(new Weapon())
 }
 
+var saveDoc = document.getElementById('name')
+var loadS = document.getElementById("load")
+var saveW = document.getElementById("save")
 var game = document.getElementById("game")
 var main = document.getElementById('main')
 var output = document.getElementById('output')
@@ -61,6 +75,8 @@ $( document ).ready(function () {
 attackbtn.addEventListener("click" , attackP)
 loot.addEventListener("click", lootEnemy)
 spawnButton.addEventListener("click" , nextE)
+saveW.addEventListener("click", save)
+loadS.addEventListener("click", load)
 // generate player and enemies
 var player = new human()
 var enemy = new Enemy()
