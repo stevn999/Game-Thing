@@ -7,6 +7,7 @@ function human() {
   this.weapon = p5.random(weapons)
 
   this.levelUp = function () {
+    // player health scaling
     this.maxStam += Math.round(p5.random(1 , 2+(level/5)))
     this.maxHealth += Math.round(p5.random(1 , 1+(level/7)))
     this.health += 20
@@ -52,7 +53,9 @@ function Enemy() {
   this.legendary = false
 
   this.name = makeName("weapon") + " " + makeName("weapon")
+  // enemy health scaling
   this.health = 100 + Math.round(p5.random(-1+(level*2),5+(level*5)))
+  // enemy damage scaling
   this.damage = Math.round(p5.random(2,4+(level/2))*2)
   this.di =  Math.round(p5.random(1,2+(level/10)))
   this.regenSpeed = 1
@@ -128,6 +131,7 @@ function Weapon() {
   this.name = this.name + this.type
   this.speed = +(this.speed).toFixed(2)
 }
+
 // armor
 function Armor() {
   this.level = level+ Math.round(p5.random(-5,1))
