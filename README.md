@@ -1,3 +1,5 @@
 # Game-Thing
 https://stevn999.github.io/Game-Thing/#
-Test
+
+Instructions  
+  1) Click fast
