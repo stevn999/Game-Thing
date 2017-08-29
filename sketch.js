@@ -158,6 +158,7 @@ var enemyClock = setInterval(function () {
     player.weapon = weapons[0]
   }
 }, 400);
+
 //
 //Display
 function makeHtml(char) {
