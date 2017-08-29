@@ -3,6 +3,8 @@ var level = 0;
 var active = true
 var activeE = false
 var lives = 3
+var pMiss = 0
+var eMiss = 0
 var lastTime = Date.now()
 var contributers = ['Daft Podunk',
                     'Willard',
@@ -19,7 +21,8 @@ var contributers = ['Daft Podunk',
                     'Fouton',
                     'Dezzy',
                     'Mitch',
-                    'E Van'
+                    'E Van',
+                    'The Dabsmith'
                 ]
 var ling = [
   'al','ey','e','ie','t','ev','ou','ic','oc','so'
@@ -30,7 +33,7 @@ var ling = [
   ,'ga','ell','se','ka','ris','sa','zim','da'
   ,'de','di','do','du','hit','dez','ler','ey'
   ,'ra','re','ri','ro','ru','an','wa','we','wi'
-  ,'wo','wu','wy'
+  ,'wo','wu','wy','et','han','sh','ane'
 ]
 
 setTimeout(function () {
@@ -137,8 +140,11 @@ var enemyClock = setInterval(function () {
     if (activeE) {
       setTimeout(function () {
         attackE()
-        activeE = true
-      },1000 - enemy.weapon.speed);
+        setTimeout(function () {
+                activeE = true
+                eMiss = 0
+        }, eMiss);
+      },(1000)- enemy.weapon.speed);
     }
     activeE = false
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -193,8 +199,6 @@ function makeName(t) {
 // Players attack
 function attackP() {
   if (active == true) {
-
-
     if (player.stamina <= 1) {
       if (player.stamina <= 0) {
         player.stamina = 0
@@ -204,20 +208,31 @@ function attackP() {
 
     } else if (player.health == 0 || enemy.health == 0) {
         main.innerHTML = makeHtml(player)
+
     }else{
       var dam = player.attack()
-      enemy.health -= dam
-      enemyDoc.innerHTML = makeHtml(enemy)
-
-      main.innerHTML = makeHtml(player)
-      output.innerHTML = ("<li> Attacked for: " + dam + "<br></li>" + output.innerHTML )
+        if (dam == 0) {
+          enemyDoc.innerHTML = makeHtml(enemy)
+          main.innerHTML = makeHtml(player)
+          output.innerHTML = ("<li> You've missed! <br></li>" + output.innerHTML )
+          pMiss = 1000
+        }else {
+        enemy.health -= dam
+        enemyDoc.innerHTML = makeHtml(enemy)
+        main.innerHTML = makeHtml(player)
+        output.innerHTML = ("<li> Attacked for: " + dam + "<br></li>" + output.innerHTML )
+      }
     }
     active = false
     setTimeout(function () {
-      active = true
-    }, 1000 -player.weapon.speed);
+      setTimeout(function () {
+              active = true
+              pMiss = 0
+      }, pMiss);
+    }, (1000) -player.weapon.speed);
   }
 }
+
 //Enemies attack
 function attackE() {
   var dam = enemy.attack()
@@ -229,6 +244,11 @@ function attackE() {
 
   }else if (player.health == 0 || enemy.health == 0) {
       enemyDoc.innerHTML = makeHtml(enemy)
+  }else if (dam == 0) {
+    enemy.stamina = +(enemy.stamina-1).toFixed(2);
+    enemyDoc.innerHTML = makeHtml(enemy)
+    output.innerHTML = ("<li class='hit damage'>Enemy missed! Strike now while they recover!</li>" + output.innerHTML )
+    eMiss = 1000
   }else{
     player.health -= dam
     enemy.stamina = +(enemy.stamina-1).toFixed(2);

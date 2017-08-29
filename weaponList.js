@@ -60,5 +60,6 @@ var wTypes = ['Sword',
               'Love',
               'Mean look',
               'Rock (swung)',
-              'Rock (thrown)'
+              'Rock (thrown)',
+              'Dab'
             ]

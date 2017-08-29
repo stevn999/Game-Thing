@@ -30,16 +30,15 @@ function human() {
   }
   this.attack = function () {
     var damage = 0
-    this.stamina = +(this.stamina-((this.weapon.damage*this.weapon.di)/20)).toFixed(0);
-    for (var i = 0; i < this.weapon.di; i++) {
-      damage += Math.round(p5.random(1,this.weapon.damage))
+    if (p5.random(this.weapon.accuracy,100)>50) {
+      this.stamina = +(this.stamina-((this.weapon.damage*this.weapon.di)/20)).toFixed(0);
+      for (var i = 0; i < this.weapon.di; i++) {
+        damage += Math.round(p5.random(1,this.weapon.damage))
+      }
     }
-    return damage;
-  }
+      return damage;
+    }
   this.stamina = 50 + Math.round(p5.random(-5,5))
-  if (true) {
-
-  }
   this.maxHealth = this.health
   this.maxStam = this.stamina
 }
@@ -76,11 +75,13 @@ function Enemy() {
 
   this.attack = function () {
     var damage = 0
-    for (var i = 0; i < this.weapon.di; i++) {
-      damage += Math.round(p5.random(1,this.weapon.damage))
+    if (p5.random(this.weapon.accuracy,100)>50) {
+      for (var i = 0; i < this.weapon.di; i++) {
+        damage += Math.round(p5.random(1,this.weapon.damage))
+      }
     }
-    return damage;
-  }
+      return damage;
+    }
   this.stamina = 50 + Math.round(p5.random(-5,5))
   this.maxStam = this.stamina
   this.maxHealth = this.health
@@ -109,6 +110,7 @@ function Weapon() {
   this.name = makeName()
   this.di =  Math.round(p5.random(1,3 + (level/10)))
   this.legendary = false
+  this.accuracy = +(p5.random(20,50).toFixed(2))
   if (p5.random(0,100)<=10) {
     this.legendary = true
     this.name = this.name + "'s Legendary "
