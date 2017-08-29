@@ -70,6 +70,7 @@ player.weapon.type = "'s starter"
 player.weapon.speed = 700
 player.weapon.damage = 8
 player.weapon.di = 3
+player.weapon.accuracy = 40
 //buildpage
 enemyDoc.innerHTML = makeHtml(enemy)
 main.innerHTML = makeHtml(player)
@@ -168,6 +169,7 @@ function makeHtml(char) {
   tmp += ("<ul class=\"tall\">")
   tmp += ("<li>" + (+(char.health/ char.maxHealth).toFixed(4)*100).toFixed(2) + "% health. " + char.health.toFixed(1) +" /"+char.maxHealth.toFixed(0)+ " points </li>")
   tmp += ("<li> Wielding " + char.weapon.name + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed/10).toFixed(0) + "</li>")
+  tmp += ("<li>" + (char.weapon.accuracy).toFixed(1) + "</li>")
   if (char.weapon.di >=2) {
 
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "s</li>")

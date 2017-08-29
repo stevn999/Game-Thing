@@ -110,7 +110,7 @@ function Weapon() {
   this.name = makeName()
   this.di =  Math.round(p5.random(1,3 + (level/10)))
   this.legendary = false
-  this.accuracy = +(p5.random(20,50).toFixed(2))
+  this.accuracy = +(p5.random(0,50 + (level)).toFixed(2))
   if (p5.random(0,100)<=10) {
     this.legendary = true
     this.name = this.name + "'s Legendary "
