@@ -126,6 +126,11 @@ var gameClock = setInterval(function () {
  }
  lastTime = Date.now();
 }, 100);
+
+function selfTest(x,y) {
+  return x+y
+}
+
 // (function($) {
 //   $.fn.nodoubletapzoom = function() {
 //       $(this).bind('touchstart', function preventZoom(e) {

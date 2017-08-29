@@ -7,12 +7,12 @@ function human() {
   this.weapon = p5.random(weapons)
 
   this.levelUp = function () {
-    this.maxStam += Math.round(p5.random(1,2+(level/5)))
-    this.maxHealth += Math.round(p5.random(1,1+(level/7)))
+    this.maxStam += Math.round(p5.random(1 , 2+(level/5)))
+    this.maxHealth += Math.round(p5.random(1 , 1+(level/7)))
     this.health += 20
     this.stamina += 10
   }
-
+  // regen, called once per update for Player
   this.regen = function () {
     if (this.stamina < this.maxStam) {
       this.stamina = +(this.stamina + (this.regenSpeed+(level+(this.maxStam/10)/50))/15).toFixed(3)
@@ -47,7 +47,7 @@ function human() {
 
 
 
-// enemy
+// enemy generator
 function Enemy() {
   this.legendary = false
 
@@ -102,7 +102,7 @@ function Enemy() {
 
 }
 
-// weapon
+// weapon generator
 function Weapon() {
   this.level = level+1
   this.speed = p5.random(100,1000)
@@ -112,6 +112,7 @@ function Weapon() {
   this.di =  Math.round(p5.random(1,3 + (level/10)))
   this.legendary = false
   this.accuracy = +(p5.random(0,50 + (level)).toFixed(2))
+  // if legendary
   if (p5.random(0,100)<=10) {
     this.legendary = true
     this.name = this.name + "'s Legendary "
@@ -123,7 +124,6 @@ function Weapon() {
     if (this.speed >= 1000) {
       this.speed = p5.random(800,999)
     }
-
   }
   this.name = this.name + this.type
   this.speed = +(this.speed).toFixed(2)
