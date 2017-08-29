@@ -7,8 +7,8 @@ function human() {
   this.weapon = p5.random(weapons)
 
   this.levelUp = function () {
-    this.maxStam += Math.round(p5.random(1,2+(level/5)))
-    this.maxHealth += Math.round(p5.random(1,1+(level/7)))
+    this.maxStam += Math.round(p5.random(1 , 2+(level/5)))
+    this.maxHealth += Math.round(p5.random(1 , 1+(level/7)))
     this.health += 20
     this.stamina += 10
   }
