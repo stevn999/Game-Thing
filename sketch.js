@@ -3,45 +3,37 @@ var level = 0;
 var active = true
 var activeE = false
 var lives = 3
+var missBase = 50
 var pMiss = 0
 var eMiss = 0
 var lastTime = Date.now()
 var contributers = ['Daft Podunk',
-                    'Willard',
-                    'Hugh Morris',
-                    'Fwiller',
-                    'Dasyayi',
-                    'Steven',
-                    'Wott',
-                    'Vince Delicious',
-                    'A giant potato',
-                    'Fabian',
-                    'Cameron Cisco',
-                    'Gabisver',
-                    'Fouton',
-                    'Dezzy',
-                    'Mitch',
-                    'E Van',
-                    'The Dabsmith',
-                    'Ninnyz'
-                ]
-var ling = [
-  'al','ie','t','ev','ic','oc','so'
-  ,"k'",'dal','dek','der','div', 'scov','leni'
-  ,'leb','si','to','my','lobo','lin','fin','son'
-  ,'s','ar','er','ir','or','ur','t','p','s','d','ba','be','bi','bo'
-  ,'bu','st','ev','en','qa','qe','qi','qo','qu'
-  ,'ga','ell','se','ka','ris','sa','zim','da'
-  ,'de','di','do','du','hit','dez','ler','ey'
-  ,'ra','re','ri','ro','ru','an','wa','we','wi'
-  ,'wo','wu','wy','et','han','ash','esh','ish',
-  'osh','ush','ane','ca'
-  ,'ce','ci','co','cu','fa','fe','fi','fo'
-  ,'fu','ga','ge','gi','go','gu'
+  'Willard',
+  'Hugh Morris',
+  'Fwiller',
+  'Dasyayi',
+  'Steven',
+  'Wott',
+  'Vince Delicious',
+  'A giant potato',
+  'Fabian',
+  'Cameron Cisco',
+  'Gabisver',
+  'Fouton',
+  'Dezzy',
+  'Mitch',
+  'E Van',
+  'The Dabsmith',
+  'Ninnyz'
 ]
 
-setTimeout(function () {
-  activeE=true
+var ling = [
+  'al', 'ie', 't', 'ev', 'ic', 'oc', 'so', "k'", 'dal', 'dek', 'der', 'div', 'scov', 'leni', 'leb', 'si', 'to', 'my', 'lobo', 'lin', 'fin', 'son', 's', 'ar', 'er', 'ir', 'or', 'ur', 't', 'p', 's', 'd', 'ba', 'be', 'bi', 'bo', 'bu', 'st', 'ev', 'en', 'qa', 'qe', 'qi', 'qo', 'qu', 'ga', 'ell', 'se', 'ka', 'ris', 'sa', 'zim', 'da', 'de', 'di', 'do', 'du', 'hit', 'dez', 'ler', 'ey', 'ra', 're', 'ri', 'ro', 'ru', 'an', 'wa', 'we', 'wi', 'wo', 'wu', 'wy', 'et', 'han', 'ash', 'esh', 'ish',
+  'osh', 'ush', 'ane', 'ca', 'ce', 'ci', 'co', 'cu', 'fa', 'fe', 'fi', 'fo', 'fu', 'ga', 'ge', 'gi', 'go', 'gu'
+]
+
+setTimeout(function() {
+  activeE = true
 }, 4000);
 
 function save() {
@@ -49,6 +41,7 @@ function save() {
   sav1 = btoa(sav1)
   saveDoc.value = sav1
 }
+
 function load() {
   var sav = saveDoc.value
   sav = atob(sav)
@@ -57,7 +50,7 @@ function load() {
 
 var weapons = []
 
-for (var i = 0; i < 20; i++) {
+for (var i = 0; i < 90; i++) {
   weapons.push(new Weapon())
 }
 
@@ -71,13 +64,13 @@ var attackbtn = document.getElementById("attackBtn")
 var enemyDoc = document.getElementById("mainEnemy")
 var spawnButton = document.getElementById("newEnemy")
 var loot = document.getElementById('Loot')
-$( document ).ready(function () {
+$(document).ready(function() {
   $(game).hide()
   $(game).slideDown(500)
 })
-attackbtn.addEventListener("click" , attackP)
+attackbtn.addEventListener("click", attackP)
 loot.addEventListener("click", lootEnemy)
-spawnButton.addEventListener("click" , nextE)
+spawnButton.addEventListener("click", nextE)
 saveW.addEventListener("click", save)
 loadS.addEventListener("click", load)
 // generate player and enemies
@@ -96,42 +89,42 @@ main.innerHTML = makeHtml(player)
 //
 
 //clocks
-var gameClock = setInterval(function () {
+var gameClock = setInterval(function() {
   if (player.health <= 0 && lives > 0) {
     lives--
     player.health = player.maxHealth
     activeE = false
     active = true
-    output.innerHTML = ("<li class=\"revive heal \">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML )
-    setTimeout(function () {
+    output.innerHTML = ("<li class=\"revive heal \">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML)
+    setTimeout(function() {
       activeE = true
-    },1000);
+    }, 1000);
   }
   if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
     enemyDoc.innerHTML = makeHtml(enemy)
     main.innerHTML = makeHtml(player)
   }
- if (enemy.health > 0) {
-   $(".hideme").hide()
- }else {
-   $(".hideme").slideDown(200)
- }
- if ((Date.now() - lastTime) > 400) {
-   for (var i = 0; i < ((Date.now() - lastTime)/100); i++) {
-     if (player.health > 0) {
-       player.regen()
-     }
-   }
-   if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
-     enemyDoc.innerHTML = makeHtml(enemy)
-     main.innerHTML = makeHtml(player)
-   }
- }
- lastTime = Date.now();
+  if (enemy.health > 0) {
+    $(".hideme").hide()
+  } else {
+    $(".hideme").slideDown(200)
+  }
+  if ((Date.now() - lastTime) > 400) {
+    for (var i = 0; i < ((Date.now() - lastTime) / 100); i++) {
+      if (player.health > 0) {
+        player.regen()
+      }
+    }
+    if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
+      enemyDoc.innerHTML = makeHtml(enemy)
+      main.innerHTML = makeHtml(player)
+    }
+  }
+  lastTime = Date.now();
 }, 100);
 
-function selfTest(x,y) {
-  return x+y
+function selfTest(x, y) {
+  return x + y
 }
 
 // (function($) {
@@ -149,7 +142,7 @@ function selfTest(x,y) {
 //       });
 //   };
 // })(jQuery);
-var clock = setInterval(function () {
+var clock = setInterval(function() {
   if (player.health > 0) {
     player.regen()
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -157,19 +150,19 @@ var clock = setInterval(function () {
       main.innerHTML = makeHtml(player)
     }
   }
-  }, 200);
+}, 200);
 
-var enemyClock = setInterval(function () {
+var enemyClock = setInterval(function() {
   if (enemy.health > 0) {
     enemy.regen()
     if (activeE) {
-      setTimeout(function () {
+      setTimeout(function() {
         attackE()
-        setTimeout(function () {
-                activeE = true
-                eMiss = 0
+        setTimeout(function() {
+          activeE = true
+          eMiss = 0
         }, eMiss);
-      },(1000)- enemy.weapon.speed);
+      }, (1000) - enemy.weapon.speed);
     }
     activeE = false
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -186,39 +179,39 @@ var enemyClock = setInterval(function () {
 //
 //Display
 function makeHtml(char) {
-  if (char.health <=0 ) {
+  if (char.health <= 0) {
     char.health = 0
   }
   var tmp = ""
-  tmp += ("<div class=\"col-lg-12 col-md-12\"><p>" + char.name + " at Level: "+ level +"</p>")
+  tmp += ("<div class=\"col-lg-12 col-md-12\"><p>" + char.name + " at Level: " + level + "</p>")
   tmp += ("<ul class=\"tall\">")
-  tmp += ("<li>" + (+(char.health/ char.maxHealth).toFixed(4)*100).toFixed(2) + "% health. " + char.health.toFixed(1) +" /"+char.maxHealth.toFixed(0)+ " points </li>")
-  tmp += ("<li> Wielding " + char.weapon.name + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed/10).toFixed(0) + "</li>")
+  tmp += ("<li>" + (+(char.health / char.maxHealth).toFixed(4) * 100).toFixed(2) + "% health. " + char.health.toFixed(1) + " /" + char.maxHealth.toFixed(0) + " points </li>")
+  tmp += ("<li> Wielding " + char.weapon.name + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
   tmp += ("<li>Accuracy: " + (char.weapon.accuracy).toFixed(1) + "</li>")
-  if (char.weapon.di >=2) {
+  if (char.weapon.di >= 2) {
 
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "s</li>")
-  }else {
+  } else {
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "</li>")
   }
-    tmp += ("<li>" + (char.stamina).toFixed(1) + " stamina</li></div>")
+  tmp += ("<li>" + (char.stamina).toFixed(1) + " stamina</li></div>")
   return tmp
 }
 main.innerHTML = makeHtml(player)
 //
 //Generate Names
 function makeName(t) {
-  var len = Math.round(p5.random(2,10))
+  var len = Math.round(p5.random(2, 10))
   var name = ""
-  for (var i = 0;name.length < len; i++) {
+  for (var i = 0; name.length < len; i++) {
     name += p5.random(ling)
   }
   name = name.toLowerCase()
   var fl = name.charAt(0)
   fl = fl.toUpperCase()
   name = name.slice(1)
-  name = fl+name
-  if (p5.random(0,100)<40 && t != 'weapon') {
+  name = fl + name
+  if (p5.random(0, 100) < 40 && t != 'weapon') {
     name = p5.random(contributers)
   }
   return name
@@ -231,32 +224,32 @@ function attackP() {
         player.stamina = 0
       }
       main.innerHTML = makeHtml(player)
-      output.innerHTML = ("<li>You cannot attack now: <strong>Not enough stamina</strong> <br></li>" + output.innerHTML )
+      output.innerHTML = ("<li>You cannot attack now: <strong>Not enough stamina</strong> <br></li>" + output.innerHTML)
 
     } else if (player.health == 0 || enemy.health == 0) {
-        main.innerHTML = makeHtml(player)
+      main.innerHTML = makeHtml(player)
 
-    }else{
+    } else {
       var dam = player.attack()
-        if (dam == 0) {
-          enemyDoc.innerHTML = makeHtml(enemy)
-          main.innerHTML = makeHtml(player)
-          output.innerHTML = ("<li> You've missed! <br></li>" + output.innerHTML )
-          pMiss = 1000
-        }else {
+      if (dam == 0) {
+        enemyDoc.innerHTML = makeHtml(enemy)
+        main.innerHTML = makeHtml(player)
+        output.innerHTML = ("<li> You've missed! <br></li>" + output.innerHTML)
+        pMiss = 1000
+      } else {
         enemy.health -= dam
         enemyDoc.innerHTML = makeHtml(enemy)
         main.innerHTML = makeHtml(player)
-        output.innerHTML = ("<li> Attacked for: " + dam + "<br></li>" + output.innerHTML )
+        output.innerHTML = ("<li> Attacked for: " + dam + "<br></li>" + output.innerHTML)
       }
     }
     active = false
-    setTimeout(function () {
-      setTimeout(function () {
-              active = true
-              pMiss = 0
+    setTimeout(function() {
+      setTimeout(function() {
+        active = true
+        pMiss = 0
       }, pMiss);
-    }, (1000) -player.weapon.speed);
+    }, (1000) - player.weapon.speed);
   }
 }
 
@@ -269,67 +262,45 @@ function attackE() {
     }
     enemyDoc.innerHTML = makeHtml(enemy)
 
-  }else if (player.health == 0 || enemy.health == 0) {
-      enemyDoc.innerHTML = makeHtml(enemy)
-  }else if (dam == 0) {
-    enemy.stamina = +(enemy.stamina-1).toFixed(2);
+  } else if (player.health == 0 || enemy.health == 0) {
     enemyDoc.innerHTML = makeHtml(enemy)
-    output.innerHTML = ("<li class='hit damage'>Enemy missed! Strike now while they recover!</li>" + output.innerHTML )
+  } else if (dam == 0) {
+    enemy.stamina = +(enemy.stamina - 1).toFixed(2);
+    enemyDoc.innerHTML = makeHtml(enemy)
+    output.innerHTML = ("<li class='hit damage'>Enemy missed! Strike now while they recover!</li>" + output.innerHTML)
     eMiss = 1000
-  }else{
+  } else {
     player.health -= dam
-    enemy.stamina = +(enemy.stamina-1).toFixed(2);
+    enemy.stamina = +(enemy.stamina - 1).toFixed(2);
     enemyDoc.innerHTML = makeHtml(enemy)
-    output.innerHTML = ("<li class='hit damage'> Took " + dam + " Damage! You are at " + player.health.toFixed(0) + " health.<br></li>" + output.innerHTML )
+    output.innerHTML = ("<li class='hit damage'> Took " + dam + " Damage! You are at " + player.health.toFixed(0) + " health.<br></li>" + output.innerHTML)
   }
 }
 //On next level
 function nextE() {
   if (active == true) {
-
-
-    var playerDamage = (player.weapon.damage*player.weapon.di)/(1000-player.weapon.speed)
-    var enemyDamage = (enemy.weapon.damage*enemy.weapon.di)/(1000-enemy.weapon.speed)
     for (var i = 0; i < 10; i++) {
-        weapons.push(new Weapon())
+      weapons.push(new Weapon())
     }
-    if (weapons.length > 100) {
-      while (weapons.length > 100) {
-          weapons.shift()
+    if (weapons.length > 500) {
+      while (weapons.length > 500) {
+        weapons.shift()
       }
     }
     main.innerHTML = makeHtml(player)
     enemyDoc.innerHTML = makeHtml(enemy)
-    // if (enemyDamage > playerDamage) {
-    //   enemy.weapon.name = enemy.name + enemy.weapon.type
-    //   if (enemy.weapon.legendary == true) {
-    //     enemy.weapon.name = enemy.weapon.name + " @"
-    //   }
-    //   player.weapon = enemy.weapon
-    //
-    // }
-
     player.levelUp()
     enemy = new Enemy()
     level += 1
     active = false
-    setTimeout(function () {
+    setTimeout(function() {
       active = true
     }, 100);
   }
 }
-function lootEnemy() {
-  //
-  // enemy.weapon.name = enemy.name + enemy.weapon.type
-  // player.weapon.name = player.name + player.weapon.type
-    var tmp = player.weapon
-  //   if (enemy.weapon.legendary == true) {
-  //     enemy.weapon.name = enemy.weapon.name + " @"
-  //   }
-  //   if (player.weapon.legendary == true) {
-  //     player.weapon.name = player.weapon.name + " @"
-  //   }
 
-    player.weapon = enemy.weapon
-    enemy.weapon = tmp
+function lootEnemy() {
+  var tmp = player.weapon
+  player.weapon = enemy.weapon
+  enemy.weapon = tmp
 }
