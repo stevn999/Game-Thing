@@ -1,7 +1,7 @@
 .info {
   overflow-y: scroll;
-  height: 200px;
-  margin-top: 1%;
+  height: 150px;
+  margin: 0.1%;
   width: 100%;
   text-align: left;
   background: #595bfb;
@@ -28,14 +28,14 @@
 
 .hideme {
   display: none;
-  margin-bottom: 1%;
+  margin-bottom: 0.5%;
 }
 
 .gamePanel {
   background: #474a47;
   color: white;
-  font-weight: 200%;
-  border-radius: 4px;
+  font-weight: 50%;
+  border-radius: 5px;
   border: 2px solid black;
   margin-bottom: 0.5%;
   list-style: none;
@@ -43,8 +43,8 @@
 
 .title {
   text-align: center;
-  Padding: 0.5% 0;
-  margin-top: 0;
+  Padding: 0.2% 0;
+  margin-top: 4px;
   margin-bottom: 1px;
 }
 
