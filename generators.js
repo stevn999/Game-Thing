@@ -54,10 +54,8 @@ function Enemy() {
 
   this.name = makeName("weapon") + " " + makeName("weapon")
   // enemy health scaling
-  this.health = 100 + Math.round(p5.random(-1+(level*2),5+(level*5)))
+  this.health = Math.round(p5.random(player.maxHealth*0.8,player.maxHealth*1.2))
   // enemy damage scaling
-  this.damage = Math.round(p5.random(2,4+(level/2))*2)
-  this.di =  Math.round(p5.random(1,2+(level/10)))
   this.regenSpeed = 1
   this.weapon = p5.random(weapons)
 

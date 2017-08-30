@@ -190,7 +190,7 @@ function makeHtml(char) {
     char.health = 0
   }
   var tmp = ""
-  tmp += ("<div class=\"container col-lg-12\"><p>" + char.name + " at Level: "+ level +"</p>")
+  tmp += ("<div class=\"col-lg-12 col-md-12\"><p>" + char.name + " at Level: "+ level +"</p>")
   tmp += ("<ul class=\"tall\">")
   tmp += ("<li>" + (+(char.health/ char.maxHealth).toFixed(4)*100).toFixed(2) + "% health. " + char.health.toFixed(1) +" /"+char.maxHealth.toFixed(0)+ " points </li>")
   tmp += ("<li> Wielding " + char.weapon.name + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed/10).toFixed(0) + "</li>")

@@ -50,6 +50,9 @@
   font-weight: 200%;
 
 }
+.playerInfo.fixme {
+
+}
 .info .revive.heal {
   background: #efcd6f;
   border: 1px solid #efcd6f;
