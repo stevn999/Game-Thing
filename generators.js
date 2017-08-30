@@ -1,5 +1,5 @@
 function human() {
-  this.name = makeName("weapon") + " " + makeName("weapon")
+  this.name = makeName("weapon")
   this.health = 100 + Math.round(p5.random(-2,10))
   this.damage = Math.round(p5.random(2,4)*2)
   this.di =  Math.round(p5.random(1,3))

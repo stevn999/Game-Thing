@@ -26,15 +26,18 @@ var contributers = ['Daft Podunk',
                     'Ninnyz'
                 ]
 var ling = [
-  'al','ey','e','ie','t','ev','ou','ic','oc','so'
+  'al','ie','t','ev','ic','oc','so'
   ,"k'",'dal','dek','der','div', 'scov','leni'
   ,'leb','si','to','my','lobo','lin','fin','son'
-  ,'s','r','t','p','s','d','ba','be','bi','bo'
+  ,'s','ar','er','ir','or','ur','t','p','s','d','ba','be','bi','bo'
   ,'bu','st','ev','en','qa','qe','qi','qo','qu'
   ,'ga','ell','se','ka','ris','sa','zim','da'
   ,'de','di','do','du','hit','dez','ler','ey'
   ,'ra','re','ri','ro','ru','an','wa','we','wi'
-  ,'wo','wu','wy','et','han','sh','ane'
+  ,'wo','wu','wy','et','han','ash','esh','ish',
+  'osh','ush','ane','ca'
+  ,'ce','ci','co','cu','fa','fe','fi','fo'
+  ,'fu','ga','ge','gi','go','gu'
 ]
 
 setTimeout(function () {
@@ -205,7 +208,7 @@ main.innerHTML = makeHtml(player)
 //
 //Generate Names
 function makeName(t) {
-  var len = Math.round(p5.random(2,7))
+  var len = Math.round(p5.random(2,10))
   var name = ""
   for (var i = 0;name.length < len; i++) {
     name += p5.random(ling)
