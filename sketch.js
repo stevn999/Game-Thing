@@ -8,9 +8,11 @@ var pMiss = 0;
 var eMiss = 0;
 var lastTime = Date.now();
 var volume = 1
-var sound = new Howl({
+var weaponPool = 100
+var hitSound = new Howl({
   src: ["engine/sword_1.mp3"]
 })
+hitSound.volume([0.5])
 
 var contributers = ['Daft Podunk',
   'Willard',
@@ -55,7 +57,7 @@ function load() {
 
 var weapons = [];
 
-for (var i = 0; i < 90; i++) {
+for (var i = 0; i < weaponPool / 2; i++) {
   weapons.push(new Weapon())
 };
 
@@ -82,8 +84,8 @@ loadS.addEventListener("click", load);
 var player = new human();
 var enemy = new Enemy();
 // make starter sword
-player.weapon.name = "Explorer's old rusty sword";
-player.weapon.type = "'s starter";
+player.weapon.name = "Explorer's ";
+player.weapon.type = "old rusty sword";
 player.weapon.speed = 700;
 player.weapon.damage = 8;
 player.weapon.di = 3;
@@ -191,7 +193,7 @@ function makeHtml(char) {
   tmp += ("<div class=\"col-lg-12 col-md-12\"><p>" + char.name + " at Level: " + level + "</p>")
   tmp += ("<ul class=\"tall\">")
   tmp += ("<li>" + (+(char.health / char.maxHealth).toFixed(4) * 100).toFixed(2) + "% health. " + char.health.toFixed(1) + " /" + char.maxHealth.toFixed(0) + " points </li>")
-  tmp += ("<li> Wielding " + char.weapon.name + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
+  tmp += ("<li> Wielding " + char.weapon.name + char.weapon.type + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
   tmp += ("<li>Accuracy: " + (char.weapon.accuracy).toFixed(1) + "</li>")
   if (char.weapon.di >= 2) {
 
@@ -244,8 +246,8 @@ function attackP() {
       } else {
         enemy.health -= dam
 
-        sound.rate([p5.random(0.8, 1.6)])
-        sound.play()
+        hitSound.rate([p5.random(0.8, 1.6)])
+        hitSound.play()
 
         enemyDoc.innerHTML = makeHtml(enemy)
         main.innerHTML = makeHtml(player)
@@ -281,8 +283,8 @@ function attackE() {
   } else {
     player.health -= dam
 
-    sound.rate([p5.random(0.8, 1.6)])
-    sound.play()
+    hitSound.rate([p5.random(0.8, 1.6)])
+    hitSound.play()
 
     enemy.stamina = +(enemy.stamina - 1).toFixed(2);
     enemyDoc.innerHTML = makeHtml(enemy)
@@ -292,11 +294,11 @@ function attackE() {
 //On next level
 function nextE() {
   if (active == true) {
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < weaponPool; i++) {
       weapons.push(new Weapon())
     }
-    if (weapons.length > 500) {
-      while (weapons.length > 500) {
+    if (weapons.length > weaponPool) {
+      while (weapons.length > weaponPool) {
         weapons.shift()
       }
     }

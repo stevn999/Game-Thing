@@ -101,10 +101,12 @@ function Enemy() {
 
 // weapon generator
 function Weapon() {
+  this.index = Math.round(p5.random(0,aTypes.length)- 0.5) 
   this.level = level + 1
   this.speed = p5.random(100, 1000)
   this.damage = Math.round(p5.random(2, 4 + (level / 4) * 2)) //old damage
-  this.type = "'s " + p5.random(wTypes)
+  this.type = aTypes[this.index][1]
+  this.dType = aTypes[this.index][0]
   this.name = makeName()
   this.di = Math.round(p5.random(1, 3 + (level / 10)))
   this.legendary = false
@@ -112,8 +114,6 @@ function Weapon() {
   // if legendary
   if (p5.random(0, 100) <= 10) {
     this.legendary = true
-    this.name = this.name + "'s Legendary "
-    this.type = this.type.slice(3)
     this.damage += Math.round(p5.random(1, 7 + (level / 3)))
     this.di += Math.round(p5.random(1, 1 + (level / 50)))
     this.accuracy += Math.round(p5.random(1, 1 + (level / 10)))
@@ -122,7 +122,7 @@ function Weapon() {
       this.speed = p5.random(800, 999)
     }
   }
-  this.name = this.name + this.type
+  this.name = this.name + "'s "
   this.speed = +(this.speed).toFixed(2)
 }
 
