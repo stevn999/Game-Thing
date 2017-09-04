@@ -1,12 +1,17 @@
 var p5 = p5.prototype;
 var level = 0;
-var active = true
-var activeE = false
-var lives = 3
-var missBase = 400
-var pMiss = 0
-var eMiss = 0
-var lastTime = Date.now()
+var active = true;
+var activeE = false;
+var lives = 3;
+var missBase = 400;
+var pMiss = 0;
+var eMiss = 0;
+var lastTime = Date.now();
+var volume = 1
+var sound = new Howl({
+  src: ["engine/sword_1.mp3"]
+})
+
 var contributers = ['Daft Podunk',
   'Willard',
   'Hugh Morris',
@@ -25,12 +30,12 @@ var contributers = ['Daft Podunk',
   'E Van',
   'The Dabsmith',
   'Ninnyz'
-]
+];
 
 var ling = [
   'al', 'ie', 't', 'ev', 'ic', 'oc', 'so', "k'", 'dal', 'dek', 'der', 'div', 'scov', 'leni', 'leb', 'si', 'to', 'my', 'lobo', 'lin', 'fin', 'son', 's', 'ar', 'er', 'ir', 'or', 'ur', 't', 'p', 's', 'd', 'ba', 'be', 'bi', 'bo', 'bu', 'st', 'ev', 'en', 'qa', 'qe', 'qi', 'qo', 'qu', 'ga', 'ell', 'se', 'ka', 'ris', 'sa', 'zim', 'da', 'de', 'di', 'do', 'du', 'hit', 'dez', 'ler', 'ey', 'ra', 're', 'ri', 'ro', 'ru', 'an', 'wa', 'we', 'wi', 'wo', 'wu', 'wy', 'et', 'han', 'ash', 'esh', 'ish',
   'osh', 'ush', 'ane', 'ca', 'ce', 'ci', 'co', 'cu', 'fa', 'fe', 'fi', 'fo', 'fu', 'ga', 'ge', 'gi', 'go', 'gu'
-]
+];
 
 setTimeout(function() {
   activeE = true
@@ -40,52 +45,52 @@ function save() {
   var sav1 = JSON.stringify(player.weapon)
   sav1 = btoa(sav1)
   saveDoc.value = sav1
-}
+};
 
 function load() {
   var sav = saveDoc.value
   sav = atob(sav)
   player.weapon = JSON.parse(sav)
-}
+};
 
-var weapons = []
+var weapons = [];
 
 for (var i = 0; i < 90; i++) {
   weapons.push(new Weapon())
-}
+};
 
-var saveDoc = document.getElementById('name')
-var loadS = document.getElementById("load")
-var saveW = document.getElementById("save")
-var game = document.getElementById("game")
-var main = document.getElementById('main')
-var output = document.getElementById('output')
-var attackbtn = document.getElementById("attackBtn")
-var enemyDoc = document.getElementById("mainEnemy")
-var spawnButton = document.getElementById("newEnemy")
-var loot = document.getElementById('Loot')
+var saveDoc = document.getElementById('name');
+var loadS = document.getElementById("load");
+var saveW = document.getElementById("save");
+var game = document.getElementById("game");
+var main = document.getElementById('main');
+var output = document.getElementById('output');
+var attackbtn = document.getElementById("attackBtn");
+var enemyDoc = document.getElementById("mainEnemy");
+var spawnButton = document.getElementById("newEnemy");
+var loot = document.getElementById('Loot');
 $(document).ready(function() {
   $(game).hide()
   $(game).slideDown(500)
-})
-attackbtn.addEventListener("click", attackP)
-loot.addEventListener("click", lootEnemy)
-spawnButton.addEventListener("click", nextE)
-saveW.addEventListener("click", save)
-loadS.addEventListener("click", load)
+});
+attackbtn.addEventListener("click", attackP);
+loot.addEventListener("click", lootEnemy);
+spawnButton.addEventListener("click", nextE);
+saveW.addEventListener("click", save);
+loadS.addEventListener("click", load);
 // generate player and enemies
-var player = new human()
-var enemy = new Enemy()
+var player = new human();
+var enemy = new Enemy();
 // make starter sword
-player.weapon.name = "Explorer's old rusty sword"
-player.weapon.type = "'s starter"
-player.weapon.speed = 700
-player.weapon.damage = 8
-player.weapon.di = 3
-player.weapon.accuracy = 40
+player.weapon.name = "Explorer's old rusty sword";
+player.weapon.type = "'s starter";
+player.weapon.speed = 700;
+player.weapon.damage = 8;
+player.weapon.di = 3;
+player.weapon.accuracy = 40;
 //buildpage
-enemyDoc.innerHTML = makeHtml(enemy)
-main.innerHTML = makeHtml(player)
+enemyDoc.innerHTML = makeHtml(enemy);
+main.innerHTML = makeHtml(player);
 //
 
 //clocks
@@ -99,7 +104,7 @@ var gameClock = setInterval(function() {
     setTimeout(function() {
       activeE = true
     }, 1000);
-  }
+  };
   if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
     enemyDoc.innerHTML = makeHtml(enemy)
     main.innerHTML = makeHtml(player)
@@ -238,6 +243,10 @@ function attackP() {
         pMiss = 1000
       } else {
         enemy.health -= dam
+
+        sound.rate([p5.random(0.8, 1.6)])
+        sound.play()
+
         enemyDoc.innerHTML = makeHtml(enemy)
         main.innerHTML = makeHtml(player)
         output.innerHTML = ("<li> Attacked for: " + dam + "<br></li>" + output.innerHTML)
@@ -271,6 +280,10 @@ function attackE() {
     eMiss = 1000
   } else {
     player.health -= dam
+
+    sound.rate([p5.random(0.8, 1.6)])
+    sound.play()
+
     enemy.stamina = +(enemy.stamina - 1).toFixed(2);
     enemyDoc.innerHTML = makeHtml(enemy)
     output.innerHTML = ("<li class='hit damage'> Took " + dam + " Damage! You are at " + player.health.toFixed(0) + " health.<br></li>" + output.innerHTML)
