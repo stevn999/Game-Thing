@@ -68,7 +68,7 @@ var wTypes = [
 0 damage
 1 di
 2 speed
-3 ?
+3 accuracy
 4 ?
 */
 var aTypes = [

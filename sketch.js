@@ -8,7 +8,7 @@ var pMiss = 0;
 var eMiss = 0;
 var lastTime = Date.now();
 var volume = 1
-var weaponPool = 100
+var weaponPool = 500
 var hitSound = new Howl({
   src: ["engine/sword_1.mp3"]
 })
