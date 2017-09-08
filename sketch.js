@@ -7,6 +7,7 @@ var missBase = 400;
 var pMiss = 0;
 var eMiss = 0;
 var lastTime = Date.now();
+var shiffmode = false
 var volume = 1
 var weaponPool = 500
 var hitSound = new Howl({
@@ -127,6 +128,9 @@ var gameClock = setInterval(function() {
       main.innerHTML = makeHtml(player)
     }
   }
+  if (shiffmode == true && enemy.health > 0) {
+    attackP()
+  }
   lastTime = Date.now();
 }, 100);
 
@@ -222,7 +226,7 @@ function attackP() {
       main.innerHTML = makeHtml(player)
 
     } else {
-      var dam = player.attack()
+      let dam = player.attack()
       if (dam == 0) {
         enemyDoc.innerHTML = makeHtml(enemy)
         main.innerHTML = makeHtml(player)
