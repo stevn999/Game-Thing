@@ -26,7 +26,6 @@ var wTypes = [
   'Bottle of urine',
   'Insulting letter',
   'Rolled up newspaper',
-  'Bong shaped like a coffee thermos',
   'POCKET SAND! SHA SHA SHAA!',
   'Lego caltrops',
   'Spoon',
@@ -152,9 +151,6 @@ var aTypes = [
   ],
   [
     [0, 0, 0, 0, 0], 'Rolled up newspaper'
-  ],
-  [
-    [0, 0, 0, 0, 0], 'Bong shaped like a coffee thermos'
   ],
   [
     [0, 0, 0, 0, 0], 'POCKET SAND! SHA SHA SHAA!'
