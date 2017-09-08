@@ -7,7 +7,7 @@ Instructions<br>
 2)
 
 made with
-  p5.js
-  howler.js
-  one free sound
-  bootstrap
+1) p5.js
+2) howler.js
+3) one free sound
+4) bootstrap
