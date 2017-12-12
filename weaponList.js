@@ -64,51 +64,51 @@ var wTypes = [
   'Dab'
 ]
 /*
-0 damage
-1 di
-2 speed
-3 accuracy
+0 damage 1-15
+1 di - 1-6
+2 speed 100-1000
+3 accuracy - 0,50
 4 ?
 */
 var aTypes = [
   [
-    [0, 0, 0, 0, 0], 'Sword'
+    [8, 1, 600, 30, 0], 'Sword'
   ],
   [
-    [0, 0, 0, 0, 0], 'Mace'
+    [6, 2, 500, 20, 0], 'Mace'
   ],
   [
-    [0, 0, 0, 0, 0], 'Long-sword'
+    [7, 2, 500, 29, 0], 'Long-sword'
   ],
   [
-    [0, 0, 0, 0, 0], 'Dagger'
+    [5, 1, 800, 40, 0], 'Dagger'
   ],
   [
-    [0, 0, 0, 0, 0], 'Bow'
+    [10, 2, 600, 15, 0], 'Bow'
   ],
   [
-    [0, 0, 0, 0, 0], 'Brass knuckles'
+    [4, 5, 800, 45, 0], 'Brass knuckles'
   ],
   [
-    [0, 0, 0, 0, 0], 'Gauntlets'
+    [8, 4, 800, 45, 0], 'Gauntlets'
   ],
   [
-    [0, 0, 0, 0, 0], 'Severed fist'
+    [2, 1, 810, 30, 0], 'Severed fist'
   ],
   [
-    [0, 0, 0, 0, 0], 'Plank, with a nail through it'
+    [10, 1, 610, 30, 0], 'Plank, with a nail through it'
   ],
   [
-    [0, 0, 0, 0, 0], 'Club'
+    [7, 2, 500, 20, 0], 'Club'
   ],
   [
-    [0, 0, 0, 0, 0], 'War pike'
+    [12, 2, 300, 25, 0], 'War pike'
   ],
   [
-    [0, 0, 0, 0, 0], 'Staff'
+    [8, 1, 900, 40, 0], 'Staff'
   ],
   [
-    [0, 0, 0, 0, 0], 'Whip'
+    [4, 3, 300, 28, 0], 'Whip'
   ],
   [
     [0, 0, 0, 0, 0], 'Lance'

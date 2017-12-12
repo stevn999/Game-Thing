@@ -62,6 +62,25 @@ for (var i = 0; i < weaponPool / 2; i++) {
   weapons.push(new Weapon())
 };
 
+function stat(index=0,feat) {
+  weapon = aTypes[index]
+  temp = 0
+  if (feat == "name") {
+   temp = weapon[1]
+  }else if (feat == 0 || feat == "damage") {
+    temp = weapon[0][0]
+  }else if (feat == 1 || feat == "di") {
+    temp = weapon[0][1]
+  }else if (feat == 2 || feat == "speed") {
+    temp = weapon[0][2]
+  }else if (feat == 3 || feat == "accuracy") {
+    temp = weapon[0][3]
+  }else if (feat == 4 || feat == "ni") {
+    temp = weapon[0][4]
+  }
+  return temp
+}
+
 var saveDoc = document.getElementById('name');
 var loadS = document.getElementById("load");
 var saveW = document.getElementById("save");
