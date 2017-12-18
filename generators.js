@@ -1,7 +1,7 @@
 function human() {
-  this.name = makeName("weapon")
+  this.name = markovGen(txt)
   this.health = 100 + Math.round(p5.random(-2, 10))
-  this.regenSpeed = 5
+  this.regenSpeed = 10
   this.weapon = p5.random(weapons)
   this.levelUp = function() {
     // player health scaling
@@ -49,7 +49,7 @@ function human() {
 function Enemy() {
   this.legendary = false
 
-  this.name = makeName("weapon") + " " + makeName("weapon")
+  this.name = markovGen(txt,"weapon") + " " + markovGen(txt,"weapon")
   // enemy health scaling
   this.health = Math.round(p5.random(player.maxHealth * 0.8, player.maxHealth * 1.2))
   // enemy damage scaling
@@ -101,13 +101,13 @@ function Enemy() {
 
 // weapon generator
 function Weapon() {
-  this.index = Math.round(p5.random(0,aTypes.length)- 0.5) 
+  this.index = Math.round(p5.random(0,aTypes.length)- 0.5)
   this.level = level + 1
   this.speed = p5.random(100, 1000)
   this.damage = Math.round(p5.random(2, 4 + (level / 4) * 2)) //old damage
   this.type = aTypes[this.index][1]
   this.dType = aTypes[this.index][0]
-  this.name = makeName()
+  this.name = markovGen(txt,'weapon')
   this.di = Math.round(p5.random(1, 3 + (level / 10)))
   this.legendary = false
   this.accuracy = +(p5.random(0, 50 + (level) * 2).toFixed(2))
@@ -134,7 +134,7 @@ function Armor() {
   }
 
   this.type = p5.random(Atypes)
-  this.name = makeName()
+  this.name = markovGen(txt)
   this.legendary = false
   if (p5.random(0, 100) <= 10) {
     this.legendary = true

@@ -1,3 +1,5 @@
+var nGrams = {}
+var order = 3
 var p5 = p5.prototype;
 var level = 0;
 var active = true;
@@ -15,8 +17,27 @@ var hitSound = new Howl({
 })
 hitSound.volume([0.5])
 
+function clean() {
+  txt = txt.toLowerCase()
+  txt = txt.replace(/\s/g, '')
+  txt = txt
+  for (var i = 0; i < txt.length - order; i++) {
+    let gram = txt.substring(i, i + order)
+
+    if (!nGrams[gram]) {
+      nGrams[gram] = []
+    }
+    nGrams[gram].push(txt.substring(i + order, i + (order * 2)))
+  }
+}
+async function asClean() {
+  clean()
+}
+asClean()
+
 var contributers = ['Daft Podunk',
   'Willard',
+  'Marco',
   'Hugh Morris',
   'Fwiller',
   'Dasyayi',
@@ -114,7 +135,18 @@ player.weapon.accuracy = 40;
 enemyDoc.innerHTML = makeHtml(enemy);
 main.innerHTML = makeHtml(player);
 //
-
+hitSound.rate([p5.random(0.8, 1.6)])
+hitSound.play()
+$(function() {
+  $("#progressbar").progressbar({
+    value: enemy.health
+  });
+});
+$(function() {
+  $("#player-progressbar").progressbar({
+    value: player.health
+  });
+});
 //clocks
 var gameClock = setInterval(function() {
   if (player.health <= 0 && lives > 0) {
@@ -160,6 +192,11 @@ function selfTest(x, y) {
 var clock = setInterval(function() {
   if (player.health > 0) {
     player.regen()
+    $(function() {
+      $("#player-progressbar").progressbar({
+        value: player.health
+      });
+    });
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
       enemyDoc.innerHTML = makeHtml(enemy)
       main.innerHTML = makeHtml(player)
@@ -173,6 +210,11 @@ var enemyClock = setInterval(function() {
     if (activeE) {
       setTimeout(function() {
         attackE()
+        $(function() {
+          $("#player-progressbar").progressbar({
+            value: player.health
+          });
+        });
         setTimeout(function() {
           activeE = true
           eMiss = 0
@@ -330,4 +372,46 @@ function lootEnemy() {
   var tmp = player.weapon
   player.weapon = enemy.weapon
   enemy.weapon = tmp
+}
+
+// namegen
+
+
+function markovGen(src,t="") {
+  var start = (p5.random(src.length))
+  var currentGram = src.substring(start, start + order)
+  var result = currentGram
+  for (var i = 0; i <= (p5.random(order/4)); i++) {
+    var possible = nGrams[currentGram]
+    if (!possible) {
+      break
+    }
+    var next = p5.random(possible)
+    result += next
+    currentGram = result.substring(result.length - order, result.length)
+  }
+  if (result.length <= 3 || !hasV(result)) {
+    markovGen(src)
+  }else if (p5.random(0, 100) < 40 && t != 'weapon') {
+    return p5.random(contributers)
+  } else {
+    return (ucf(result));
+  }
+}
+
+function ucf(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function hasV(str) {
+  var vow = "aeiou"
+  con = false
+  for (var i = 0; i < str.length; i++) {
+    for (var j = 0; j < vow.length; j++) {
+      if (str.charAt(i) === vow.charAt(j)) {
+        con = true
+      }
+    }
+  }
+  return con
 }
