@@ -292,7 +292,7 @@ function attackP() {
         enemyDoc.innerHTML = makeHtml(enemy)
         main.innerHTML = makeHtml(player)
         output.innerHTML = ("<li> You've missed! <br></li>" + output.innerHTML)
-        pMiss = 1000
+        pMiss = 500
       } else {
         enemy.health -= dam
 
