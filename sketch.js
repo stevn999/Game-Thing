@@ -5,7 +5,7 @@ var level = 0;
 var active = true;
 var activeE = false;
 var lives = 3;
-var missBase = 400;
+var missBase = 200;
 var pMiss = 0;
 var eMiss = 0;
 var lastTime = Date.now();
@@ -75,6 +75,7 @@ function load() {
   var sav = saveDoc.value
   sav = atob(sav)
   player.weapon = JSON.parse(sav)
+  Level = player.weapon.level
 };
 
 var weapons = [];
@@ -101,7 +102,6 @@ function stat(index = 0, feat) {
   }
   return temp
 }
-
 var saveDoc = document.getElementById('name');
 var loadS = document.getElementById("load");
 var saveW = document.getElementById("save");
@@ -139,12 +139,13 @@ hitSound.rate([p5.random(0.8, 1.6)])
 hitSound.play()
 $(function() {
   $("#progressbar").progressbar({
-    value: enemy.health
+    value: enemy.maxHealth
   });
 });
 $(function() {
   $("#player-progressbar").progressbar({
-    value: player.health
+    value: player.maxHealth
+
   });
 });
 //clocks
@@ -183,7 +184,7 @@ var gameClock = setInterval(function() {
     attackP()
   }
   lastTime = Date.now();
-}, 100);
+}, 1000);
 
 function selfTest(x, y) {
   return x + y
@@ -194,7 +195,7 @@ var clock = setInterval(function() {
     player.regen()
     $(function() {
       $("#player-progressbar").progressbar({
-        value: player.health
+        value: (player.health/player.maxHealth)*100
       });
     });
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -240,7 +241,7 @@ function makeHtml(char) {
     char.health = 0
   }
   var tmp = ""
-  tmp += ("<div class=\"col-lg-12 col-md-12\"><p>" + char.name + " at Level: " + level + "</p>")
+  tmp += ("<div class=\"col-lg-12 col-md-12 inline-block\"><p>" + char.name + " at Level: " + level + "</p>")
   tmp += ("<ul class=\"tall\">")
   tmp += ("<li>" + (+(char.health / char.maxHealth).toFixed(4) * 100).toFixed(2) + "% health. " + char.health.toFixed(1) + " /" + char.maxHealth.toFixed(0) + " points </li>")
   tmp += ("<li> Wielding " + char.weapon.name + char.weapon.type + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
@@ -251,6 +252,7 @@ function makeHtml(char) {
   } else {
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "</li>")
   }
+  tmp += ("<li>" + ((char.weapon.damage*char.weapon.di)*(char.weapon.speed/1000)*(char.weapon.accuracy/100)).toFixed(3) +" DPS</li></div>")
   tmp += ("<li>" + (char.stamina).toFixed(1) + " stamina</li></div>")
   return tmp
 }
@@ -300,7 +302,7 @@ function attackP() {
         hitSound.play()
         $(function() {
           $("#progressbar").progressbar({
-            value: enemy.health
+            value: (enemy.health/enemy.maxHealth)*100
           });
         });
         enemyDoc.innerHTML = makeHtml(enemy)
@@ -336,7 +338,7 @@ function attackE() {
     eMiss = 1000
   } else {
     player.health -= dam
-
+    player.healthMod += (0.01*level)
     hitSound.rate([p5.random(0.8, 1.6)])
     hitSound.play()
 
@@ -392,12 +394,13 @@ function markovGen(src,t="") {
   }
   if (result.length <= 3 || !hasV(result)) {
     markovGen(src)
-  }else if (p5.random(0, 100) < 40 && t != 'weapon') {
+  }else if (p5.random(0, 100) < 10 && t != 'weapon') {
     return p5.random(contributers)
   } else {
     return (ucf(result));
   }
 }
+
 
 function ucf(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

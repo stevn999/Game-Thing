@@ -1,6 +1,7 @@
 .info {
   overflow-y: scroll;
-  height: 150px;
+  height: 20rem;
+  max-height: inherit;
   margin: 0.1%;
   width: 100%;
   text-align: left;
@@ -37,7 +38,7 @@
   font-weight: 50%;
   border-radius: 5px;
   border: 2px solid black;
-  margin-bottom: 0.5%;
+  margin-bottom: 1%;
   list-style: none;
 }
 
@@ -70,6 +71,15 @@
   font-style: arial;
   text-transform: capitalize;
 }
+
+.drop (max-width: 800px) {
+  display:none;
+}
+
+.dropdown:hover + .drop (max-width: 800px) {
+  display:none;
+}
+
 
 #attackBtn2 {
   margin-top: 1%;
