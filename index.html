@@ -57,11 +57,11 @@
         <div class="dropup col-xs-12">
           <button class="btn btn-primary dropdown-toggle col-sm-12" type="button" data-toggle="dropdown">Save
     <span class="caret"></span></button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-form">
             <div class="col-sm-12">
               <div class="input">
                 <a class="btn btn-block">
-                  <div id="save" class="input-group-addon btn-info">save</div>
+                  <div eventKey={3} onSelect='{(e) => {e.stopPropagation();}}' id="save" class="input-group-addon btn-info">save</div>
                 </a>
                 <input class="form-control " id="name" name="name" type="text" />
               </div>
