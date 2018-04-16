@@ -172,10 +172,10 @@ var gameClock = setInterval(function() {
     enemyDoc.innerHTML = makeHtml(enemy)
     main.innerHTML = makeHtml(player)
   }
-  if (enemy.health > 0) {
+  if (enemy.health >= 0) {
     $(".hideme").hide()
   } else {
-    $(".hideme").slideDown(200)
+    $(".hideme").slideDown(100)
   }
   if ((Date.now() - lastTime) > 400) {
     for (var i = 0; i < ((Date.now() - lastTime) / 100); i++) {
@@ -192,7 +192,7 @@ var gameClock = setInterval(function() {
     attackP()
   }
   lastTime = Date.now();
-}, 1000);
+}, 100);
 
 function selfTest(x, y) {
   return x + y
