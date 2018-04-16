@@ -191,11 +191,14 @@ function selfTest(x, y) {
 }
 
 var clock = setInterval(function() {
+  if ($('ul#output li').length > 200) {
+    $('#output li:last-child').remove();
+  }
   if (player.health > 0) {
     player.regen()
     $(function() {
       $("#player-progressbar").progressbar({
-        value: (player.health/player.maxHealth)*100
+        value: (player.health / player.maxHealth) * 100
       });
     });
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -237,12 +240,13 @@ var enemyClock = setInterval(function() {
 //
 //Display
 function makeHtml(char) {
+
   if (char.health <= 0) {
     char.health = 0
   }
   var tmp = ""
   tmp += ("<div class=\"col-lg-12 col-md-12 inline-block\"><p>" + char.name + " at Level: " + level + "</p>")
-  tmp += ("<ul class=\"tall\">")
+  tmp += ("<ul id=\"oot\"class=\"tall\">")
   tmp += ("<li>" + (+(char.health / char.maxHealth).toFixed(4) * 100).toFixed(2) + "% health. " + char.health.toFixed(1) + " /" + char.maxHealth.toFixed(0) + " points </li>")
   tmp += ("<li> Wielding " + char.weapon.name + char.weapon.type + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
   tmp += ("<li>Accuracy: " + (char.weapon.accuracy).toFixed(1) + "</li>")
@@ -252,7 +256,7 @@ function makeHtml(char) {
   } else {
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "</li>")
   }
-  tmp += ("<li>" + ((char.weapon.damage*char.weapon.di)*(char.weapon.speed/1000)*(char.weapon.accuracy/100)).toFixed(3) +" DPS</li></div>")
+  tmp += ("<li>" + ((char.weapon.damage * char.weapon.di) * (char.weapon.speed / 1000) * (char.weapon.accuracy / 100)).toFixed(3) + " DPS</li></div>")
   tmp += ("<li>" + (char.stamina).toFixed(1) + " stamina</li></div>")
   return tmp
 }
@@ -302,7 +306,7 @@ function attackP() {
         hitSound.play()
         $(function() {
           $("#progressbar").progressbar({
-            value: (enemy.health/enemy.maxHealth)*100
+            value: (enemy.health / enemy.maxHealth) * 100
           });
         });
         enemyDoc.innerHTML = makeHtml(enemy)
@@ -338,7 +342,7 @@ function attackE() {
     eMiss = 1000
   } else {
     player.health -= dam
-    player.healthMod += (0.01*level)
+    player.healthMod += (0.01 * level)
     hitSound.rate([p5.random(0.8, 1.6)])
     hitSound.play()
 
@@ -379,11 +383,11 @@ function lootEnemy() {
 // namegen
 
 
-function markovGen(src,t="") {
+function markovGen(src, t = "") {
   var start = (p5.random(src.length))
   var currentGram = src.substring(start, start + order)
   var result = currentGram
-  for (var i = 0; i <= (p5.random(order/4)); i++) {
+  for (var i = 0; i <= (p5.random(order / 4)); i++) {
     var possible = nGrams[currentGram]
     if (!possible) {
       break
@@ -394,7 +398,7 @@ function markovGen(src,t="") {
   }
   if (result.length <= 3 || !hasV(result)) {
     markovGen(src)
-  }else if (p5.random(0, 100) < 10 && t != 'weapon') {
+  } else if (p5.random(0, 100) < 10 && t != 'weapon') {
     return p5.random(contributers)
   } else {
     return (ucf(result));
