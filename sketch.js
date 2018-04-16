@@ -155,7 +155,7 @@ var gameClock = setInterval(function() {
     player.health = player.maxHealth
     activeE = false
     active = true
-    output.innerHTML = ("<li class=\"revive heal \" style=\"position: sticky;bottom: " + (1.5 * $(".revive").length) + "em;\">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML)
+    output.innerHTML = ("<li class=\"revive heal \" style=\"position: sticky;bottom: " + (2 * $(".revive").length) + "em;\">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML)
     setTimeout(function() {
       activeE = true
 
