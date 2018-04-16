@@ -8,7 +8,8 @@ function human() {
   this.levelUp = function() {
     // player health scaling
     this.maxStam += Math.round(p5.random(1, 2 + (level / 5)))
-    this.maxHealth += Math.round(p5.random(1, 1 + (level / 7))+this.healthMod)
+    this.maxHealth += Math.round(p5.random(1, 1 + (level / 7)))
+    this.weapon.damage += +p5.random(0,0.5+(this.healthMod/10)).toFixed(0)
     this.health += 20
     this.stamina += 10
   }
@@ -105,26 +106,32 @@ function Enemy() {
 function Weapon() {
   this.index = Math.round(p5.random(0,aTypes.length)- 0.5)
   this.level = level + 1
-  this.speed = p5.random(100, 1000)
-  this.damage = Math.round(p5.random(2, 10 + (level / 4) * 2)) //old damage
+  this.speed = p5.random(1000-(1000/(1+(level/100)+0.6)), 1000-(1000/(1+(level/100)+0.4)))
+  this.damage = Math.round(p5.random(2 + (level / 6) * 2, 3 + (level / 6) * 2)) //old damage
   this.type = aTypes[this.index][1]
   this.dType = aTypes[this.index][0]
   this.name = markovGen(txt,'weapon')
-  this.di = Math.round(p5.random(1, 3 + (level / 10)))
+  this.di = Math.round(p5.random(1 + (level / 50), 3 + (level / 50)))
   this.legendary = false
-  this.accuracy = +(p5.random(0, 50 + (level) * 2).toFixed(2))
+  this.accuracy = +(p5.random(101-(101/(1+(level/100)+1)), 101-(101/(1+(level/100)+1.1))))
   // if legendary
   if (p5.random(0, 100) <= 10) {
     this.legendary = true
-    this.damage += Math.round(p5.random(1, 15 + (level / 1.1)))
-    this.di += Math.round(p5.random(1, 1 + (level / 10)))
-    this.accuracy += Math.round(p5.random(1, 1 + (level / 10)))
-    this.speed += p5.random(10, 400)
+    this.damage += Math.round(p5.random(0+ (level / 5), 5 + (level / 1.1)))
+    this.di += Math.round(p5.random(1+ (level / 50), 1 + (level / 50)))
+    this.accuracy += Math.round(p5.random(0+(level/50), 1 + (level / 60)))
+    this.speed += p5.random(50, 100)
+    this.level += +p5.random(1,5).toFixed(0)
     if (this.speed >= 1000) {
       this.speed = p5.random(800, 999)
     }
   }
-  this.name = this.name + "'s "
+  if (this.legendary) {
+    this.name = this.name + "'s legendary "
+  }else {
+    this.name = this.name + "'s "
+  }
+
   this.speed = +(this.speed).toFixed(2)
 }
 

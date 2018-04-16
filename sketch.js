@@ -155,10 +155,18 @@ var gameClock = setInterval(function() {
     player.health = player.maxHealth
     activeE = false
     active = true
-    output.innerHTML = ("<li class=\"revive heal \">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML)
+    output.innerHTML = ("<li class=\"revive heal \" style=\"position: sticky;bottom: " + (1.5 * $(".revive").length) + "em;\">You have been revived to continue your journey! " + lives + " revives remaining! </li>" + output.innerHTML)
     setTimeout(function() {
       activeE = true
+
     }, 1000);
+    setTimeout(function () {
+      $(".revive").last().fadeOut(1200)
+      setTimeout(function () {
+      $(".revive").last().remove()
+    }, 1200);
+
+    }, 15000);
   };
   if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
     enemyDoc.innerHTML = makeHtml(enemy)
@@ -354,7 +362,7 @@ function attackE() {
 //On next level
 function nextE() {
   if (active == true) {
-    for (var i = 0; i < weaponPool; i++) {
+    for (var i = 0; i < weaponPool/10; i++) {
       weapons.push(new Weapon())
     }
     if (weapons.length > weaponPool) {
