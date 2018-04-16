@@ -172,7 +172,7 @@ var gameClock = setInterval(function() {
     enemyDoc.innerHTML = makeHtml(enemy)
     main.innerHTML = makeHtml(player)
   }
-  if (enemy.health >= 0) {
+  if (enemy.health > 0) {
     $(".hideme").hide()
   } else {
     $(".hideme").slideDown(100)
