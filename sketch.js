@@ -231,7 +231,7 @@ var enemyClock = setInterval(function() {
           activeE = true
           eMiss = 0
         }, eMiss);
-      }, (1000) - enemy.weapon.speed);
+      }, (1000) - (enemy.weapon.speed*0.9));
     }
     activeE = false
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
