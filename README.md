@@ -4,9 +4,9 @@
 
 Instructions<br>
 1) Click fast
-2)
+2) Trade your weapon for a better one.
 
-made with
+Made with
 1) p5.js
 2) howler.js
 3) one free sound

@@ -127,10 +127,10 @@ var enemy = new Enemy();
 // make starter sword
 player.weapon.name = "Explorer's ";
 player.weapon.type = "old rusty sword";
-player.weapon.speed = 700;
-player.weapon.damage = 8;
-player.weapon.di = 3;
-player.weapon.accuracy = 40;
+player.weapon.speed = 580;
+player.weapon.damage = 3;
+player.weapon.di = 2;
+player.weapon.accuracy = 50;
 //buildpage
 enemyDoc.innerHTML = makeHtml(enemy);
 main.innerHTML = makeHtml(player);
@@ -379,6 +379,11 @@ function nextE() {
     setTimeout(function() {
       active = true
     }, 100);
+    $(function() {
+      $("#progressbar").progressbar({
+        value: enemy.maxHealth
+      });
+    });
   }
 }
 

@@ -9,7 +9,14 @@ function human() {
     // player health scaling
     this.maxStam += Math.round(p5.random(1, 2 + (level / 5)))
     this.maxHealth += Math.round(p5.random(1, 1 + (level / 7)))
-    this.weapon.damage += +p5.random(0,0.5+(this.healthMod/10)).toFixed(0)
+    this.weapon.accuracy += +p5.random(0,0.5+(this.healthMod/15)).toFixed(0)
+    this.weapon.speed += +p5.random(0,0.5+(this.healthMod/10)).toFixed(0)
+    if (this.weapon.accuracy > 100) {
+      this.weapon.accuracy = 100
+    }
+    if (this.weapon.speed >= 1000) {
+      this.weapon.speed = 1000
+    }
     this.health += 20
     this.stamina += 10
   }
@@ -30,23 +37,25 @@ function human() {
 
   }
   this.attack = function() {
-    var damage = 0
-    if (p5.random(0, missBase + this.weapon.accuracy) >= 50) {
-      this.stamina = +(this.stamina - ((this.weapon.damage * this.weapon.di) / 20)).toFixed(0);
-      for (var i = 0; i < this.weapon.di; i++) {
-        damage += Math.round(p5.random(1, this.weapon.damage))
-      }
+    var damage = atk(this.weapon)
+    this.stamina = +(this.stamina - ((this.weapon.damage * this.weapon.di) / 20)).toFixed(0);
+      return damage;
     }
-    return damage;
-  }
+
   this.stamina = 50 + Math.round(p5.random(-5, 5))
   this.maxHealth = this.health
   this.maxStam = this.stamina
 }
 
-
-
-
+function atk(w) {
+  var damage = 0
+  if (p5.random(w.accuracy/100,2) >= 1) {
+    for (var i = 0; i < w.di; i++) {
+      damage += Math.round(p5.random(1, w.damage))
+    }
+  }
+  return damage;
+  }
 
 // enemy generator
 function Enemy() {
@@ -74,12 +83,7 @@ function Enemy() {
   }
 
   this.attack = function() {
-    var damage = 0
-    if (p5.random(0, missBase + this.weapon.accuracy) >= 50) {
-      for (var i = 0; i < this.weapon.di; i++) {
-        damage += Math.round(p5.random(1, this.weapon.damage))
-      }
-    }
+    var damage = atk(this.weapon)
     return damage;
   }
   this.stamina = 50 + Math.round(p5.random(-5, 5))
@@ -106,7 +110,7 @@ function Enemy() {
 function Weapon() {
   this.index = Math.round(p5.random(0,aTypes.length)- 0.5)
   this.level = level + 1
-  this.speed = p5.random(1000-(1000/(1+(level/100)+0.6)), 1000-(1000/(1+(level/100)+0.4)))
+  this.speed = p5.random(1000-(1000/(1+(level/100)+1)), 1000-(1000/(1+(level/100)+0.8)))
   this.damage = Math.round(p5.random(2 + (level / 6) * 2, 3 + (level / 6) * 2)) //old damage
   this.type = aTypes[this.index][1]
   this.dType = aTypes[this.index][0]
