@@ -38,7 +38,7 @@ function human() {
   }
   this.attack = function() {
     var damage = atk(this.weapon)
-    this.stamina = +(this.stamina - ((this.weapon.damage * this.weapon.di) / 20)).toFixed(0);
+    this.stamina = +(this.stamina - ((this.weapon.damage * this.weapon.di) / 9)).toFixed(0);
       return damage;
     }
 
@@ -89,7 +89,7 @@ function Enemy() {
   this.stamina = 50 + Math.round(p5.random(-5, 5))
   this.maxStam = this.stamina
   this.maxHealth = this.health
-  if (p5.random(0, 400 - level * 2) <= 10) {
+  if (p5.random(0, 100) <= 10) {
     this.legendary = true
     this.maxHealth *= 1.5
     this.health = this.maxHealth
@@ -121,10 +121,10 @@ function Weapon() {
   // if legendary
   if (p5.random(0, 100) <= 10) {
     this.legendary = true
-    this.damage += Math.round(p5.random(0+ (level / 5), 5 + (level / 1.1)))
-    this.di += Math.round(p5.random(1+ (level / 50), 1 + (level / 50)))
-    this.accuracy += Math.round(p5.random(0+(level/50), 1 + (level / 60)))
-    this.speed += p5.random(50, 100)
+    this.damage += Math.round(p5.random(0+ (level / 3), 1 + (level / 2)))
+    this.di += Math.round(p5.random(0+ (level / 100), 1 + (level / 100)))
+    this.accuracy += Math.round(p5.random(0+(level/90), 1 + (level / 100)))
+    this.speed += p5.random(20, 40)
     this.level += +p5.random(1,5).toFixed(0)
     if (this.speed >= 1000) {
       this.speed = p5.random(800, 999)

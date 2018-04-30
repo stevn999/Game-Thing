@@ -127,7 +127,7 @@ var enemy = new Enemy();
 // make starter sword
 player.weapon.name = "Explorer's ";
 player.weapon.type = "old rusty sword";
-player.weapon.speed = 580;
+player.weapon.speed = 700;
 player.weapon.damage = 3;
 player.weapon.di = 2;
 player.weapon.accuracy = 50;
@@ -292,7 +292,7 @@ function attackP() {
   if (active == true) {
     if (player.stamina <= 1) {
       if (player.stamina <= 0) {
-        player.stamina = 0
+        //player.stamina = 0
       }
       main.innerHTML = makeHtml(player)
       output.innerHTML = ("<li>You cannot attack now: <strong>Not enough stamina</strong> <br></li>" + output.innerHTML)
