@@ -5,13 +5,13 @@ var level = 0;
 var active = true;
 var activeE = false;
 var lives = 3;
-var missBase = 200;
+var missBase = 150;
 var pMiss = 0;
 var eMiss = 0;
 var lastTime = Date.now();
 var shiffmode = false
 var volume = 1
-var weaponPool = 500
+var weaponPool = 50
 var hitSound = new Howl({
   src: ["engine/sword_1.mp3"]
 })
@@ -80,7 +80,7 @@ function load() {
 
 var weapons = [];
 
-for (var i = 0; i < weaponPool / 2; i++) {
+for (var i = 0; i < weaponPool / 5; i++) {
   weapons.push(new Weapon())
 };
 
@@ -114,7 +114,7 @@ var spawnButton = document.getElementById("newEnemy");
 var loot = document.getElementById('Loot');
 $(document).ready(function() {
   $(game).hide()
-  $(game).slideDown(500)
+  $(game).slideDown(400)
 });
 attackbtn.addEventListener("click", attackP);
 loot.addEventListener("click", lootEnemy);
@@ -127,15 +127,15 @@ var enemy = new Enemy();
 // make starter sword
 player.weapon.name = "Explorer's ";
 player.weapon.type = "old rusty sword";
-player.weapon.speed = 700;
+player.weapon.speed = 680;
 player.weapon.damage = 3;
 player.weapon.di = 2;
-player.weapon.accuracy = 50;
+player.weapon.accuracy = 52;
 //buildpage
 enemyDoc.innerHTML = makeHtml(enemy);
 main.innerHTML = makeHtml(player);
 //
-hitSound.rate([p5.random(0.8, 1.6)])
+hitSound.rate([p5.random(0.9, 1.4)])
 hitSound.play()
 $(function() {
   $("#progressbar").progressbar({
@@ -145,7 +145,6 @@ $(function() {
 $(function() {
   $("#player-progressbar").progressbar({
     value: player.maxHealth
-
   });
 });
 //clocks
@@ -160,11 +159,11 @@ var gameClock = setInterval(function() {
       activeE = true
 
     }, 1000);
-    setTimeout(function () {
+    setTimeout(function() {
       $(".revive").last().fadeOut(1200)
-      setTimeout(function () {
-      $(".revive").last().remove()
-    }, 1200);
+      setTimeout(function() {
+        $(".revive").last().remove()
+      }, 1200);
 
     }, 15000);
   };
@@ -192,7 +191,7 @@ var gameClock = setInterval(function() {
     attackP()
   }
   lastTime = Date.now();
-}, 100);
+}, 8);
 
 function selfTest(x, y) {
   return x + y
@@ -231,7 +230,7 @@ var enemyClock = setInterval(function() {
           activeE = true
           eMiss = 0
         }, eMiss);
-      }, (1000) - (enemy.weapon.speed*0.9));
+      }, (1000) - (enemy.weapon.speed * 0.9));
     }
     activeE = false
     if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
@@ -256,7 +255,7 @@ function makeHtml(char) {
   tmp += ("<div class=\"col-lg-12 col-md-12 inline-block\"><p>" + char.name + " at Level: " + level + "</p>")
   tmp += ("<ul id=\"oot\"class=\"tall\">")
   tmp += ("<li>" + (+(char.health / char.maxHealth).toFixed(4) * 100).toFixed(2) + "% health. " + char.health.toFixed(1) + " /" + char.maxHealth.toFixed(0) + " points </li>")
-  tmp += ("<li> Wielding " + char.weapon.name + char.weapon.type + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(0) + "</li>")
+  tmp += ("<li> Wielding " + char.weapon.name + char.weapon.type + " :<br><em>Level " + char.weapon.level + "</em><br>speed: " + (char.weapon.speed / 10).toFixed(1) + "</li>")
   tmp += ("<li>Accuracy: " + (char.weapon.accuracy).toFixed(1) + "</li>")
   if (char.weapon.di >= 2) {
 
@@ -264,7 +263,9 @@ function makeHtml(char) {
   } else {
     tmp += ("<li> rolling " + char.weapon.di + " D" + char.weapon.damage + "</li>")
   }
-  tmp += ("<li>" + ((char.weapon.damage * char.weapon.di) * (char.weapon.speed / 1000) * (char.weapon.accuracy / 100)).toFixed(3) + " DPS</li></div>")
+  tmp += `<li>Attack rating:${Math.round((char.weapon.di+(char.weapon.di*char.weapon.damage)/2)*(char.weapon.speed/1000))}</li></div>`
+
+  //tmp += ("<li>" + ((char.weapon.damage * char.weapon.di) * (char.weapon.speed / 1000) * (char.weapon.accuracy / 100)).toFixed(3) + " DPS</li></div>")
   tmp += ("<li>" + (char.stamina).toFixed(1) + " stamina</li></div>")
   return tmp
 }
@@ -309,7 +310,14 @@ function attackP() {
         pMiss = 500
       } else {
         enemy.health -= dam
-
+        player.weapon.accuracy+=p5.random(0,0.01)
+        if (player.weapon.accuracy>100) {
+          player.weapon.accuracy=100
+        }
+        player.weapon.speed+=p5.random(0,0.1)
+        if (player.weapon.speed>1000) {
+          player.weapon.speed=1000
+        }
         hitSound.rate([p5.random(0.8, 1.6)])
         hitSound.play()
         $(function() {
@@ -362,7 +370,7 @@ function attackE() {
 //On next level
 function nextE() {
   if (active == true) {
-    for (var i = 0; i < weaponPool/10; i++) {
+    for (var i = 0; i < weaponPool / 10; i++) {
       weapons.push(new Weapon())
     }
     if (weapons.length > weaponPool) {
@@ -436,10 +444,9 @@ function hasV(str) {
   return con
 }
 $("document").ready(function() {
-
   $('.dropdown-menu').on('click', function(e) {
-      if($(this).hasClass('dropdown-menu-form')) {
-          e.stopPropagation();
-      }
+    if ($(this).hasClass('dropdown-menu-form')) {
+      e.stopPropagation();
+    }
   });
 });
