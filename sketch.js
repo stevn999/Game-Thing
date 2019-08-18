@@ -11,11 +11,12 @@ var eMiss = 0;
 var lastTime = Date.now();
 var shiffmode = false
 var volume = 1
+volume.value=1
 var weaponPool = 50
 var hitSound = new Howl({
   src: ["engine/sword_1.mp3"]
 })
-hitSound.volume([0.5])
+hitSound.volume([volume.value/100])
 
 function clean() {
   txt = txt.toLowerCase()
@@ -112,6 +113,7 @@ var attackbtn = document.getElementById("attackBtn");
 var enemyDoc = document.getElementById("mainEnemy");
 var spawnButton = document.getElementById("newEnemy");
 var loot = document.getElementById('Loot');
+var volume = document.getElementById('volume');
 $(document).ready(function() {
   $(game).hide()
   $(game).slideDown(400)
@@ -121,6 +123,7 @@ loot.addEventListener("click", lootEnemy);
 spawnButton.addEventListener("click", nextE);
 saveW.addEventListener("click", save);
 loadS.addEventListener("click", load);
+
 // generate player and enemies
 var player = new human();
 var enemy = new Enemy();
@@ -135,6 +138,7 @@ player.weapon.accuracy = 52;
 enemyDoc.innerHTML = makeHtml(enemy);
 main.innerHTML = makeHtml(player);
 //
+hitSound.volume([volume.value/100])
 hitSound.rate([p5.random(0.9, 1.4)])
 hitSound.play()
 $(function() {
@@ -149,6 +153,11 @@ $(function() {
 });
 //clocks
 var gameClock = setInterval(function() {
+  $(function() {
+    $("#player-progressbar").progressbar({
+      value: (player.health / player.maxHealth) * 100
+    });
+  });
   if (player.health <= 0 && lives > 0) {
     lives--
     player.health = player.maxHealth
@@ -233,10 +242,14 @@ var enemyClock = setInterval(function() {
       }, (1000) - (enemy.weapon.speed * 0.9));
     }
     activeE = false
-    if (enemyDoc.innerHTML != makeHtml(enemy) || main.innerHTML != makeHtml(player)) {
-      enemyDoc.innerHTML = makeHtml(enemy)
-      main.innerHTML = makeHtml(player)
-    }
+
+    $(function() {
+      $("#progressbar").progressbar({
+        value: (enemy.health / enemy.maxHealth) * 100
+      });
+    });
+    enemyDoc.innerHTML = makeHtml(enemy)
+    main.innerHTML = makeHtml(player)
   }
   if (player.weapon === undefined) {
     weapons.push(new Weapon())
@@ -310,14 +323,15 @@ function attackP() {
         pMiss = 500
       } else {
         enemy.health -= dam
-        player.weapon.accuracy+=p5.random(0,0.01)
-        if (player.weapon.accuracy>100) {
-          player.weapon.accuracy=100
+        player.weapon.accuracy += p5.random(0, 0.01)
+        if (player.weapon.accuracy > 100) {
+          player.weapon.accuracy = 100
         }
-        player.weapon.speed+=p5.random(0,0.1)
-        if (player.weapon.speed>1000) {
-          player.weapon.speed=1000
+        player.weapon.speed += p5.random(0, 0.1)
+        if (player.weapon.speed > 1000) {
+          player.weapon.speed = 1000
         }
+        hitSound.volume([volume.value/100])
         hitSound.rate([p5.random(0.8, 1.6)])
         hitSound.play()
         $(function() {
@@ -359,6 +373,7 @@ function attackE() {
   } else {
     player.health -= dam
     player.healthMod += (0.01 * level)
+    hitSound.volume([volume.value/100])
     hitSound.rate([p5.random(0.8, 1.6)])
     hitSound.play()
 

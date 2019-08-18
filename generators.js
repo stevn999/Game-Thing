@@ -3,18 +3,18 @@ function human() {
   this.healthMod = 0
   this.stamMod = 0
   this.health = 100 + Math.round(p5.random(-2, 10))
-  this.regenSpeed = 10
+  this.regenSpeed = 15
   this.weapon = p5.random(weapons)
   this.levelUp = function() {
     // player health scaling
     this.maxStam += Math.round(p5.random(1, 2 + (level / 5)))
     this.maxHealth += Math.round(p5.random(1, 1 + (level / 7)))
     this.weapon.accuracy += +p5.random(0, 0.5 + (this.healthMod / 15)).toFixed(0)
-    this.weapon.speed += +p5.random(0, 0.5 + (this.healthMod / 10)).toFixed(0)
+    this.weapon.speed += +(p5.random(0, 0.5 + (this.healthMod / 10)).toFixed(0))
     if (this.weapon.accuracy > 100) {
       this.weapon.accuracy = 100
     }
-    if (this.weapon.speed >= 1000) {
+    if (this.weapon.speed > 1000) {
       this.weapon.speed = 1000
     }
     this.health += 20
@@ -56,9 +56,12 @@ function atk(w) {
   if (player.health<(player.maxHealth/5)) {
     sub=4
   }
+  if (player.health<(player.maxHealth/10)) {
+    sub=9
+  }
   if (p5.random(w.accuracy / 100, sub) >= 1) {
     for (var i = 0; i < w.di; i++) {
-      damage += Math.round(p5.random(1, w.damage))
+      damage += Math.round(p5.random(1, w.damage+(sub/2)))
     }
   }
   return damage;
@@ -75,15 +78,15 @@ function Enemy() {
   this.regenSpeed = 1
   this.weapon = p5.random(weapons)
   this.regen = function() {
-    this.regenSpeed = 1 + (level / 1.5)
+    this.regenSpeed = 15 + (level / 2)
     if (this.stamina < this.maxStam) {
-      this.stamina = +(this.stamina + this.regenSpeed / 10).toFixed(3)
+      this.stamina = +(this.stamina + (this.regenSpeed + (level + (this.maxStam / 10) / 50)) / 15).toFixed(3)
     } else if (this.stamina > this.maxStam) {
       this.stamina = this.maxStam
     }
 
     if (this.health < this.maxHealth) {
-      this.health = +(this.health + this.regenSpeed / 100).toFixed(3)
+      this.health = +(this.health + (this.regenSpeed + (level / 5) + (this.maxHealth / 40)) / 50).toFixed(2)
     } else if (this.health > this.maxHealth) {
       this.health = this.maxHealth
     }
